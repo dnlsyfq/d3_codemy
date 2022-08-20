@@ -2,13 +2,9 @@
 
 ### selection method
 
-> .select('')
+> .select('') // only selects the first element that matches the selector
 
-only selects the first element that matches the selector
-
-> .selectAll('')
-
-returns all of the elements that match the selector in the DOM
+> .selectAll('') // returns all of the elements that match the selector in the DOM
 
 * each element in the selection includes a reference to its parent node in DOM
 * takes one parameter :
@@ -29,8 +25,55 @@ d3.selectAll('div');
 let dataset = [55,34,23,22,59];
 d3.selectAll("p")
    .data(dataset);
-
 ```
+---
+```
+ <body>
+    <h3>Most Streamed YouTube Videos in Billions:</h3>
+	</body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div> 
+```
+```
+let videoData = [{title: "Despacito", amount: 5.68},
+         {title: "Shape of You", amount: 3.89},
+         {title: "See You Again", amount: 3.85},
+         {title: "Uptown Funk", amount: 3.32},
+         {title: "Masha and the Bear: Recipe for Disaster", amount: 3.31},
+         {title: "Gangam Style", amount: 3.23},
+         {title: "Sorry", amount: 3.03},
+         {title: "Sugar", amount: 2.80},
+         {title: "Shake it Off", amount: 2.67},
+         {title: "Roar", amount: 2.65},
+         {title: "Bailando", amount: 2.63},
+         {title: "Thinking Out Loud", amount: 2.53},
+         {title: "Counting Stars", amount: 2.51},
+         {title: "Dark Horse", amount: 2.46},
+         {title: "Lean On", amount: 2.43}
+ ];
+
+let divSelection = d3.select("body") 
+  .selectAll("div");
+
+//Add your code here:
+divSelection.data(videoData)
+  .text(d=>d)
+```
+
+--- 
 ### text method 
 
 > .text();
@@ -43,6 +86,10 @@ divSelection
   .text(function(d) { 
      return d.title + ": " + d.amount + " views";
 	 });
+	 
+ divSelection
+  .data(videoData)
+  .text(function(d) {return `${d.title}: ${d.amount} views`}); 	 
 ```
 **d parameter**
 * need a function with a d param to access each datum associated per element
@@ -53,18 +100,33 @@ divSelection
 
 > .attr(arg,arg);
 
-takes two parameters, the HTML attribute you wish to change , All of the elements in this selection will now be styled with the same class.
+takes two parameters, the HTML attribute you wish to change and the value you wish to assign i
+, All of the elements in this selection will now be styled with the same class.
 ```
 .attr("class", function(d,i){return });
 ```
 
 > .style(arg,arg);
 
- takes two parameters, the CSS property you wish to change and styles that depend on the value of the data of each element? Customize the css property (i.e. width) of each div
+takes two parameters, the CSS property you wish to change and the value you wish to assign it.
+and styles that depend on the value of the data of each element? Customize the css property (i.e. width) of each div
 ```
 .style("css property",function(d,i){return d.Variable * 50 + "px"})
 ```
 
+```
+let dataset = [55,34,23,22,59];
+ 
+let svg = d3.select("body")
+            .selectAll("div")
+            .data(dataset)
+            .attr("id", function(d,i){ return "element-" + i; })
+            .style("width", function(d){
+                   return d + "px";
+            });
+```
+* The .attr() method changed the HTML attribute id to be based on the element index in the dataset
+* The .style() method computed the width to be a function of the datum value
 
 
 **css class**
@@ -90,6 +152,41 @@ divSelection
   .attr('class','bar')
   .style('width',function(d){return d.amount * 50 + "px"});
 ```
+---
+
+```
+let videoData = [{title: "Despacito", amount: 5.68},
+{title: "Shape of You", amount: 3.89},
+{title: "See You Again", amount: 3.85},
+{title: "Uptown Funk", amount: 3.32},
+{title: "Masha and the Bear: Recipe for Disaster", amount: 3.31},
+{title: "Gangam Style", amount: 3.23},
+{title: "Sorry", amount: 3.03},
+{title: "Sugar", amount: 2.80},
+{title: "Shake it Off", amount: 2.67},
+{title: "Roar", amount: 2.65},
+{title: "Bailando", amount: 2.63},
+{title: "Thinking Out Loud", amount: 2.53},
+{title: "Counting Stars", amount: 2.51},
+{title: "Dark Horse", amount: 2.46},
+{title: "Lean On", amount: 2.43}
+];
+
+let divSelection = d3.select("body")
+.selectAll("div");
+
+divSelection
+.data(videoData)
+.text(function(d) {
+return d.title + ": " + d.amount + " views";
+})
+.attr("class","bar")
+.style('width',d => d.amount * 50 + "px")
+```
+
+
+  
+---
 ### enter and append method
 turn theoretical elements into real 
 
@@ -156,6 +253,9 @@ selection
 ```
 
 ```
+let poemVerses = ["Always","in the middle", "of our bloodiest battles", "you lay down your arms","like flowering mines","to conquer me home."];
+
+
 let selection = d3.select("#viz")
   .selectAll('p')
   .data(poemVerses)
