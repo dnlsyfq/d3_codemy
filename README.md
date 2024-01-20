@@ -306,3 +306,10 @@ selection
           d3.select(this).text(d);
     });
 ```
+
+```
+selection
+    .on("mouseover", function(d,i) {
+          d3.select(this).text(d);
+    });
+```
