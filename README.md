@@ -297,3 +297,12 @@ var h1 = d3.selectAll("section")
   .append("h1")
     .text("Hello!");
 ```
+
+```
+// "click", "mouseover", "mouseout", "mouseenter" and more.
+
+selection
+    .on("mouseover", function(d,i) {
+          d3.select(this).text(d);
+    });
+```
