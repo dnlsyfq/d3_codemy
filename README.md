@@ -266,3 +266,34 @@ let selection = d3.select("#viz")
     d3.select(this).text(d);
   });
 ```
+
+```
+let dataset = [55,34,23,22,59];
+
+let svg = d3.select("body")
+            .selectAll("div")
+            .data(dataset)
+            .attr("id", function(d,i){ return "element-" + i; })
+            .style("width", function(d){
+                   return d + "px";
+            });
+```
+
+```
+let divSelection = d3.select("body") 
+  .selectAll("div");
+  
+  divSelection
+  	.data(videoData)
+    .enter()
+    .append('div')
+    .text(function(d){return `${d.title}: ${d.amount}`})
+    
+```
+
+```
+var h1 = d3.selectAll("section")
+    .style("background", "steelblue")
+  .append("h1")
+    .text("Hello!");
+```
